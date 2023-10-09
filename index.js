@@ -27,8 +27,14 @@ async function run() {
     const db = client.db("MoonJewelryDB");
     const jewelriesCollection = db.collection("jewelries");
 
-    app.get("/jewelries", (req, res) => {
-        const result = jewelriesCollection.find().toArray();
+    app.get("/jewelries", async(req, res) => {
+        const result = await jewelriesCollection.find().toArray();
+        res.send(result);
+    })
+    app.post("/jewelries", async(req, res) => {
+        const jewelry = req.body;
+        console.log(jewelry)
+        const result = await jewelriesCollection.insertOne(jewelry);
         res.send(result);
     })
     // Send a ping to confirm a successful connection
